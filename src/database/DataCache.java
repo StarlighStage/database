@@ -12,6 +12,7 @@ public class DataCache extends Errno{
 
 	HashMap<Integer,Cards>cards;
 	HashMap<Integer,Idol>charas;
+	HashMap<Integer,Skill>skills;
 	Database database;
 	
 	public DataCache(){
@@ -40,7 +41,7 @@ public class DataCache extends Errno{
 	public boolean hasIdol(Idol idol){
 		int id = -1;
 		try{
-			id = Integer.parseInt(idol.getMap().get("id"));
+			id = Integer.parseInt(idol.getMap().get("chara_id"));
 		}catch(Exception e){
 			return false;
 		}
@@ -76,7 +77,7 @@ public class DataCache extends Errno{
 			this.errno=1;
 			return false;
 		}
-		this.charas.put((int)Integer.parseInt(idol.getMap().get("id")), idol);
+		this.charas.put((int)Integer.parseInt(idol.getMap().get("chara_id")), idol);
 		this.Ereset();
 		return true;
 	}
@@ -87,12 +88,30 @@ public class DataCache extends Errno{
 		return charas.get(i);
 	}
 	public boolean setSkill(Skill skill) {
-		// TODO 自动生成的方法存根
-		Eunfinied();
-		return false;
+		if(!skill.complete()){
+			this.errorMessage="skill_not_complet";
+			this.errno=2;
+			return false;
+		}
+		if(hasSkill(skill)){
+			this.errorMessage="skill_exist";
+			this.errno=1;
+			return false;
+		}
+		this.skills.put((int)Integer.parseInt(skill.getMap().get("id")), skill);
+		this.Ereset();
+		return true;
 	}
-	public boolean hasSkill(int parseInt) {
-		// TODO 自动生成的方法存根
-		return false;
+	public boolean hasSkill(Skill skill) {
+		int id = -1;
+		try{
+			id = Integer.parseInt(skill.getMap().get("id"));
+		}catch(Exception e){
+			return false;
+		}
+		return this.hasSkill(id);
+	}
+	public boolean hasSkill(int id) {
+		return skills.containsKey(id);
 	}
 }

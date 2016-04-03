@@ -3,7 +3,7 @@ package game;
 public class Skill extends DataNormal{
 
 	protected enum Aurg{
-		chara_id,skill_name,skill_type,judge_type,skill_trigger_type,skill_trigger_value,cutin_type,
+		id,skill_name,skill_type,judge_type,skill_trigger_type,skill_trigger_value,cutin_type,
 		condition,value,probability_type,available_time_type;
 	}
 	protected enum AurgString{
