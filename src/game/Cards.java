@@ -40,4 +40,11 @@ public class Cards extends DataNormal{
 	public String className() {
 		return "card";
 	}
+	@Override
+	public String[] aurgsString() {
+		AurgString[] tt = AurgString.values();
+		String[] s = new String[tt.length];
+		for(int i = 0;i<tt.length;s[i]=tt[i++].toString());
+		return s;
+	}
 }

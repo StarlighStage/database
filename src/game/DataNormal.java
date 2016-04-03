@@ -44,6 +44,13 @@ public abstract class DataNormal extends Errno {
 		for(int i = 0;i<tt.length;s[i]=tt[i++].toString());
 		return s;
 	}
+	@Override
+	public String[] aurgsString() {
+		AurgString[] tt = AurgString.values();
+		String[] s = new String[tt.length];
+		for(int i = 0;i<tt.length;s[i]=tt[i++].toString());
+		return s;
+	}
 	 * */
 	/**check if name is a key word in this object
 	 * @param name
@@ -125,4 +132,5 @@ public abstract class DataNormal extends Errno {
 	}
 	public abstract String className();
 
+	public  abstract String[] aurgsString();
 }

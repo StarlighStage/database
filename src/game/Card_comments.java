@@ -45,5 +45,11 @@ public class Card_comments extends DataNormal{
 	public String className() {
 		return "card_c_t";
 	}
-
+	@Override
+	public String[] aurgsString() {
+		AurgString[] tt = AurgString.values();
+		String[] s = new String[tt.length];
+		for(int i = 0;i<tt.length;s[i]=tt[i++].toString());
+		return s;
+	}
 }

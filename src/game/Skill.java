@@ -36,5 +36,11 @@ public class Skill extends DataNormal{
 	public String className() {
 		return "skill";
 	}
-	
+	@Override
+	public String[] aurgsString() {
+		AurgString[] tt = AurgString.values();
+		String[] s = new String[tt.length];
+		for(int i = 0;i<tt.length;s[i]=tt[i++].toString());
+		return s;
+	}
 }

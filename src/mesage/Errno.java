@@ -7,6 +7,7 @@ package mesage;
  * 04:enter an Waring type
  * 05:Negative Method
  * 06:Condition unchecked
+ * 07:SQL Error
  * @author laurencedu
  *
  */
