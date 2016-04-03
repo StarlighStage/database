@@ -7,7 +7,8 @@ import mesage.Errno;
 
 /**analyze a String begin at 
  * xx_yy_t( /n
- * which in format a=10; a='asd'; aa_bb_t(...)
+ * which in format a=10; a='asd'; valite = [aa_bb_t(...),aa_bb_t(...)...]/n
+ * and end with)
  * @author laurencedu
  *
  */

@@ -41,5 +41,9 @@ public class Card_comments extends DataNormal{
 		for(int i = 0;i<tt.length;s[i]=tt[i++].toString());
 		return s;
 	}
+	@Override
+	public String className() {
+		return "card_c_t";
+	}
 
 }

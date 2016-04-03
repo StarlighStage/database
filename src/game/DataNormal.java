@@ -123,6 +123,6 @@ public abstract class DataNormal extends Errno {
 	public boolean containKey(String key){
 		return map.containsKey(key);
 	}
-	
+	public abstract String className();
 
 }
