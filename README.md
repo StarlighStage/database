@@ -1,4 +1,4 @@
 # database
-database creator
-Idol m@ster cinderelle girls starlight stage
+database creator<br>
+Idol m@ster cinderelle girls starlight stage<br>
 database basic with SQLite
