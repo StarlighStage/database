@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 public class Cards extends DataNormal{
 	
+	
+	public Chara idol;
+	public Skill skill;
+	
 	protected enum Aurg{
 		id , chara_id , rarity, attribute ,title_flag , evolution_id,series_id,pose, place,evolution_type , album_id,
 		open_story_id ,open_dress_id ,skill_id ,leader_skill_id , grow_type,hp_min ,
@@ -52,5 +56,9 @@ public class Cards extends DataNormal{
 	@Override
 	public int getId() {
 		return Integer.parseInt(this.map.get("id"));
+	}
+	
+	public int getChara(){
+		return Integer.parseInt("chara_id");
 	}
 }

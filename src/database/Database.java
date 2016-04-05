@@ -13,7 +13,8 @@ import java.util.Map;
 
 import mesage.Errno;
 import game.Cards;
-import game.Idol;
+import game.Chara;
+import game.Skill;
 
 public class Database extends Errno{
 	Connection database;
@@ -22,7 +23,7 @@ public class Database extends Errno{
 		database = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
-			database = DriverManager.getConnection("jdbc:sqlite:.\\database\\database.db");
+			database = DriverManager.getConnection("jdbc:sqlite:"+main.Config.dataFile+main.Config.database);
 		} catch ( Exception e ) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
@@ -37,7 +38,7 @@ public class Database extends Errno{
 		return false;//TODO
 	}
 	
-	public boolean hasIdol(Idol idol){
+	public boolean hasIdol(Chara idol){
 		return false;//TODO
 	}
 	public boolean hasIdol(int id){
@@ -48,7 +49,7 @@ public class Database extends Errno{
 		Eunfinied();
 		return false;//TODO
 	}
-	public boolean setChara(Idol idol){
+	public boolean setChara(Chara idol){
 		Eunfinied();
 		return false;//TODO
 	}
@@ -68,6 +69,19 @@ public class Database extends Errno{
 		}
 		out(2,"Records created successfully");
 		return true;
+	}
+	
+	public boolean insertCard(Cards card){
+		Eunfinied();
+		return false;
+	}
+	public boolean insertChara(Chara chara){
+		Eunfinied();
+		return false;
+	}
+	public boolean insertSkill(Skill skill){
+		Eunfinied();
+		return false;
 	}
 	public boolean insert(String table,Map<String, String> map,ArrayList<String> strings){
 		return runCode(insertCode(table, map, strings));

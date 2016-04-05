@@ -2,6 +2,10 @@ package game;
 
 import java.util.ArrayList;
 
+import main.Config;
+
+	
+
 /**	int chara_id;
 	String name;
 	String name_kana;
@@ -32,9 +36,11 @@ import java.util.ArrayList;
  * @author laurencedu
  *
  */
-public class Idol extends DataNormal{
+public class Chara extends DataNormal{
 
 	Valist valist_Idol = new Valist();
+	
+	public ArrayList<Cards> cards = new ArrayList<Cards>(Config.numberCardsForIdol);
 	
 	protected enum Aurg{
 		chara_id, lst_name, lst_name_kana, age, home_town, height, weight, body_size_1, body_size_2, body_size_3,

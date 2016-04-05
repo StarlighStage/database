@@ -2,12 +2,13 @@ package url;
 
 import game.Cards;
 import game.DataNormal;
-import game.Idol;
+import game.Chara;
 import game.Skill;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-
+import main.Config;
 import mesage.Errno;
 
 import database.DataCache;
@@ -106,6 +107,22 @@ public class HtmlAnaliser extends Errno{
 	}
 	
 	
+	public List<Integer>getListCards(){
+		LinkedList<Integer> listCards = new LinkedList<Integer>();
+		String[] s = this.score.split("\\.icon\\.icon_");
+		for(int i=1;i<s.length;i++)listCards.add(Integer.parseInt(s[i].substring(0, 6)));
+		out(1,"get list card for ["+listCards.size()+"] cards");
+		return listCards;
+	}
+	
+	public static String icon_page(){
+		return Config.http+Config.icon+'/'+Config.iconCss;
+	}
+	
+	public static String card_table_page(int id){
+		return Config.http+Config.mainSitePage+"/"+Config.dataCardPageBegin+"/"+id+"/"+Config.dataCardPageEnd;
+	}
+	
 	/**Analyze card page /card/$card_id$/table<br>
 	 * then put card info and idol info(if not exist) into data
 	 * @param data
@@ -139,7 +156,7 @@ public class HtmlAnaliser extends Errno{
 					switch(list.get(0)){
 					case "chara":
 						out(2,"setting for chara<<<");
-						if(!analyseChara(list.get(1), new Idol() ,data)){
+						if(!analyseChara(list.get(1), new Chara() ,data)){
 							out(1,"chara>>>>>errno:"+this.errorMessage);
 						}
 						continue;
@@ -211,7 +228,7 @@ public class HtmlAnaliser extends Errno{
 	 * @param data 
 	 * @return
 	 */
-	public boolean analyseChara(String codeChara, Idol idol, DataCache data){
+	private boolean analyseChara(String codeChara, Chara idol, DataCache data){
 		Code_t_Analiser_change analiser = new Code_t_Analiser_change(codeChara);
 		String name;
 		String value;
@@ -271,8 +288,9 @@ public class HtmlAnaliser extends Errno{
 	 * @param data
 	 * @return
 	 */
-	public boolean analyseSkill(String codeChara, Skill skill, DataCache data){
+	private boolean analyseSkill(String codeChara, Skill skill, DataCache data){
 		Code_t_Analiser_change analiser = new Code_t_Analiser_change(codeChara);
+		if(!analiser.hasNext())return true;
 		String name;
 		String value;
 		if(!analiser.analyseNext()){

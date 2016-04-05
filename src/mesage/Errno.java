@@ -23,7 +23,7 @@ public abstract class Errno {
 	 */
 	public int errno = -1;
 	public String errorMessage = "nothing";
-	public boolean log = false;
+	public boolean log = main.Config.debugLog;
 	
 	/**4: out put all
 	 * 3: only for end of method
@@ -46,11 +46,12 @@ public abstract class Errno {
 	protected void Eunfinied(){
 		this.errno = 6;
 		this.errorMessage = "writint methode";
+		out("writint methode");
 	}
-	public void out(String message){
+	public void out(Object message){
 		if(log)System.out.println("["+this.getClass().getName()+"] : "+message);
 	}
-	public void out(int elev,String message){
+	public void out(int elev,Object message){
 		if(log&&elev<=this.elev)System.out.println("["+this.getClass().getName()+"] : "+message);
 	}
 }

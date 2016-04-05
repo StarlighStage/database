@@ -137,4 +137,10 @@ public abstract class DataNormal extends Errno {
 
 	public  abstract List<String> aurgsString();
 	public abstract int getId();
+	@Override
+	public boolean equals(Object obj){
+		if(!(obj instanceof DataNormal))return false;
+		DataNormal o = (DataNormal) obj;
+		return o.className().equals(this.className())&&o.getId()==this.getId();
+	}
 }

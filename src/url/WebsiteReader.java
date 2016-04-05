@@ -6,7 +6,7 @@ import java.net.URL;
 
 public class WebsiteReader {
 
-	public String pageReader(String url){
+	public static String pageReader(String url){
 		String res = "";
 		try {
 			URL url_ = new URL(url);

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class Skill extends DataNormal{
 
+	public Chara idol;
+	
 	protected enum Aurg{
 		id,skill_name,skill_type,judge_type,skill_trigger_type,skill_trigger_value,cutin_type,
 		condition,value,probability_type,available_time_type;

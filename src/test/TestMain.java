@@ -1,7 +1,7 @@
 package test;
 
 import game.Cards;
-import game.Idol;
+import game.Chara;
 import game.Skill;
 
 import java.io.IOException;
@@ -21,22 +21,22 @@ public class TestMain {
 
 	
 	public static void main(String[] args){
-		WebsiteReader asd = new WebsiteReader();
-		String ty = asd.pageReader("https://starlight.kirara.ca/card/200023/table");
+		/*
+		String ty = WebsiteReader.pageReader("https://starlight.kirara.ca/card/200023/table");
 		System.out.println("Finish for loading web page\n");
 		HtmlAnaliser analyser = new HtmlAnaliser(ty);
 		DataCache cache = new DataCache();
 		analyser.log=false;
 		analyser.elev=2;
 		if(!analyser.analyseCardPage(cache))System.out.println("error: "+analyser.errorMessage);
-		
+		/*
 		Database database = new Database();
 		System.out.println(cache.hasIdol(197));
 		System.out.println(cache.getSkill(200023).toString());
 		database.log=true;
 		database.elev=5;
 		database.insert("skill", cache.getSkill(200023).getMap(), new Skill().aurgsString());
-		
+		*/
 /*		ArrayList<String>keys =new ArrayList<String>();
 		keys.add("id");
 		keys.add("type");
@@ -49,15 +49,9 @@ public class TestMain {
 			}
 			System.out.println();
 		}
-*/		database.close();
-/*		String source = "id=48, name='キュートステップ'";
-		int index = 5;
-		String enAnal;
-		System.out.println(source.charAt(index));
-		System.out.println(source.substring(0, index));
-		System.out.println((enAnal = source.substring(index+1)));
-		System.out.println((enAnal="'キュートステップ'"));
+*/		/*database.close();*/
+		DataCache data = new DataCache();
+		data.update();
 		
-		System.out.println(enAnal.substring(enAnal.indexOf((int)'\'')+1, enAnal.lastIndexOf((int)'\'')));*/
 	}
 }
