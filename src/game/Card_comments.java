@@ -52,4 +52,9 @@ public class Card_comments extends DataNormal{
 		for(int i = 0;i<tt.length;s[i]=tt[i++].toString());
 		return s;
 	}
+	@Override
+	public int getId() {
+		// TODO 自动生成的方法存根
+		return Integer.parseInt(this.map.get("Idol_id"));
+	}
 }

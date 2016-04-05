@@ -1,6 +1,7 @@
 package test;
 
 import game.Cards;
+import game.Idol;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,11 +25,15 @@ public class TestMain {
 		System.out.println("Finish for loading web page\n");
 		HtmlAnaliser analyser = new HtmlAnaliser(ty);
 		DataCache cache = new DataCache();
-		cache.hasCard(0);
+		analyser.log=true;
+		analyser.elev=3;
 		if(!analyser.analyseCardPage(cache))System.out.println("error: "+analyser.errorMessage);
 		
 		Database database = new Database();
-		database.insert("", cache.getCard(200023).getMap(), new Cards().aurgsString());
+		System.out.println(cache.hasIdol(197));
+		database.insert("cards", cache.getCard(200023).getMap(), new Cards().aurgsString());
+		database.insert("chara", cache.getChara(197).getMap(), new Idol().aurgsString());
+		
 /*		ArrayList<String>keys =new ArrayList<String>();
 		keys.add("id");
 		keys.add("type");
@@ -42,6 +47,14 @@ public class TestMain {
 			System.out.println();
 		}
 */		database.close();
-
+/*		String source = "id=48, name='キュートステップ'";
+		int index = 5;
+		String enAnal;
+		System.out.println(source.charAt(index));
+		System.out.println(source.substring(0, index));
+		System.out.println((enAnal = source.substring(index+1)));
+		System.out.println((enAnal="'キュートステップ'"));
+		
+		System.out.println(enAnal.substring(enAnal.indexOf((int)'\'')+1, enAnal.lastIndexOf((int)'\'')));*/
 	}
 }

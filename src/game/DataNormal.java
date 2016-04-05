@@ -72,7 +72,7 @@ public abstract class DataNormal extends Errno {
 	public boolean setElements(String name,String val){
 		if(!checkIn(name)){
 			this.errno = 3;
-			this.errorMessage = name+" not a key word";
+			this.errorMessage = name+" isn't a key word";
 			return false;
 		}
 		if(map.containsKey(name)){
@@ -81,6 +81,7 @@ public abstract class DataNormal extends Errno {
 			return false;
 		}
 		map.put(name.toLowerCase(), val);
+		Ereset();
 		return true;
 	}
 	
@@ -94,6 +95,7 @@ public abstract class DataNormal extends Errno {
 				name = a;
 				if(!this.map.containsKey(name)){
 					this.errno=1;
+					this.errorMessage = "lost "+name;
 					return false;
 				}
 				try{AurgString_valueOf(name);continue;}catch(Exception e){};
@@ -133,4 +135,5 @@ public abstract class DataNormal extends Errno {
 	public abstract String className();
 
 	public  abstract String[] aurgsString();
+	public abstract int getId();
 }

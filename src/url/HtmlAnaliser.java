@@ -67,7 +67,7 @@ public class HtmlAnaliser extends Errno{
 		String[] tmp;
 		tmp = score.split("<", 2);
 		score ="<"+tmp[1];
-		//System.out.println(tmp[0]);
+		out(4,tmp[0]);
 		return tmp[0];
 	}
 	/**check flag if it's same as ty, if yes, remove it.
@@ -79,8 +79,8 @@ public class HtmlAnaliser extends Errno{
 		boolean res = true;
 		if((getNextType()&(flag|endflag)) ==0)return false;
 		tmp =getFlag();
-		//System.out.println("["+tmp+"]");
-		//System.out.println("["+ty+"]");
+		out(4,"["+tmp+"]");
+		out(4,"["+ty+"]");
 		if(!tmp.equals(ty)){
 			score ="<"+tmp+">"+score;
 			res = false;
@@ -106,7 +106,7 @@ public class HtmlAnaliser extends Errno{
 	}
 	
 	
-	/**Analyze card page /card/$card_id$/table\n 
+	/**Analyze card page /card/$card_id$/table<br>
 	 * then put card info and idol info(if not exist) into data
 	 * @param data
 	 * @return
@@ -129,26 +129,28 @@ public class HtmlAnaliser extends Errno{
 				return false;
 			}
 			Cards card = new Cards();
-			System.out.println("setting cards:"+id);// debug
+			out(1,"setting cards:"+id);// debug
 			card.setElements("id", id);
 			while(this.score.length()>2){
 				list = this.table_getRow();
-				System.out.println("set>"+list.get(0)+":"+list.get(1));// debug
+				out(2,"set>"+list.get(0)+":"+list.get(1));// debug
 				if(!card.setElements(list.get(0), list.get(1))){
 					if(card.errno==3)
 					switch(list.get(0)){
 					case "chara":
-						if(!analyseChara(list.get(1), new Idol(),data)){
-							//TODO
+						out(2,"setting for chara<<<");
+						if(!analyseChara(list.get(1), new Idol() ,data)){
+							out(1,"chara>>>>>errno:"+this.errorMessage);
 						}
 						continue;
 					case "skill":
+						out(2,"setting for skill<<<");
 						if(!analyseSkill(list.get(1), new Skill(),data)){
-							//TODO
+							out(1,"skill>>>>>errno:"+this.errorMessage);
 						}
 						continue;
 					case "valist"://TODO
-					default: System.out.println(">>>Useless:"+"["+list.get(0)+"]");
+					default: out(3,">>>Useless:"+"["+list.get(0)+"]");
 					}
 				}
 			}
@@ -210,12 +212,13 @@ public class HtmlAnaliser extends Errno{
 	 * @return
 	 */
 	public boolean analyseChara(String codeChara, Idol idol, DataCache data){
-		Code_t_Analiser analiser = new Code_t_Analiser(codeChara);
+		Code_t_Analiser_change analiser = new Code_t_Analiser_change(codeChara);
 		String name;
 		String value;
 		if(!analiser.analyseNext()){
 			this.errno=analiser.errno;
-			this.errorMessage="Code_t_Analiser."+analiser.errorMessage;
+			this.errorMessage="analyseChara."+analiser.sName+"."+analiser.errorMessage;
+			out(1,"[errno]:"+errorMessage);
 			return false;
 		}
 		name = analiser.getName();
@@ -223,17 +226,22 @@ public class HtmlAnaliser extends Errno{
 		if(!name.equals("chara_id")){//careful
 			this.errno=3;
 			this.errorMessage="illegal format chara";
+			out(1,"[errno]:"+errorMessage);
 			return false;
 		}
+		out(3,"chara>>>>> setting for "+name+" ["+value+"]");
 		if(data.hasIdol(Integer.parseInt(value))){//careful
+			out(2,"chara>>> id:["+value+"] exist>>> finish without problem");
 			Ereset();
 			return true;
 		}
+		idol.setElements(name, value);
 		int id = Integer.parseInt(value);
 		if(!analyseAA_t(idol, analiser, ""+id))return false;
 		if(!data.setChara(idol)){
 			this.errno=data.errno;
 			this.errorMessage="DataCache."+data.errorMessage;
+			out(1,"[errno]:"+errorMessage);
 			return false;
 		}
 		Ereset();
@@ -264,12 +272,13 @@ public class HtmlAnaliser extends Errno{
 	 * @return
 	 */
 	public boolean analyseSkill(String codeChara, Skill skill, DataCache data){
-		Code_t_Analiser analiser = new Code_t_Analiser(codeChara);
+		Code_t_Analiser_change analiser = new Code_t_Analiser_change(codeChara);
 		String name;
 		String value;
 		if(!analiser.analyseNext()){
 			this.errno=analiser.errno;
-			this.errorMessage="Code_t_Analiser."+analiser.errorMessage;
+			this.errorMessage="Code_t_Analiser_change."+analiser.errorMessage;
+			out(1,"[errno]:"+errorMessage);
 			return false;
 		}
 		name = analiser.getName();
@@ -277,40 +286,43 @@ public class HtmlAnaliser extends Errno{
 		if(!name.equals("id")){//careful
 			this.errno=3;
 			this.errorMessage="illegal format chara";
+			out(1,"[errno]:"+errorMessage);
 			return false;
 		}
 		if(data.hasSkill(Integer.parseInt(value))){//careful
 			Ereset();
 			return true;
 		}
+		skill.setElements(name, value);
 		int id = Integer.parseInt(value);
 		if(!analyseAA_t(skill, analiser, ""+id))return false;
 		if(!data.setSkill(skill)){
 			this.errno=data.errno;
 			this.errorMessage="DataCache."+data.errorMessage;
+			out(1,"[errno]:"+errorMessage);
 			return false;
 		}
 		Ereset();
 		return true;//TODO check
 	}
 	
-	private <S extends DataNormal> boolean analyseAA_t(S chara,Code_t_Analiser analiser,String id){
+	private <S extends DataNormal> boolean analyseAA_t(S chara,Code_t_Analiser_change analiser,String id){
 		String name;
 		String value;
 		while(analiser.hasNext()){
 			analiser.analyseNext();
 			name = analiser.getName();
 			value = analiser.getValue();
-			System.out.println("set>"+name+":"+value);// debug
+			out(2,"set>"+name+":"+value);// debug
 			if(!chara.setElements(name, value)){
 				switch(name){//careful
-				default: System.out.println(">>>Useless:"+"["+name+"]");
 				}
 			}
 		}
 		if(!chara.complete()){
 			this.errorMessage = "["+chara.className()+"]"+"element card haven't complet for "+id+" "+chara.errno+"["+chara.errorMessage+"]";
 			this.errno = 3;
+			out(1,"[errno]:"+errorMessage);
 			return false;
 		}
 		return true;	

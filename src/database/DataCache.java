@@ -18,6 +18,7 @@ public class DataCache extends Errno{
 	public DataCache(){
 		cards = new HashMap<Integer,Cards>();
 		charas = new HashMap<Integer,Idol>();
+		skills = new HashMap<Integer,Skill>();
 		database = new Database();
 	}
 	public DataCache(Database database){
@@ -26,26 +27,14 @@ public class DataCache extends Errno{
 		//TODO
 	}
 	public boolean hasCard(Cards card){
-		int id = -1;
-		try{
-			id = Integer.parseInt(card.getMap().get("id"));
-		}catch(Exception e){
-			return false;
-		}
-		return this.hasCard(id);
+		return this.hasCard(card.getId());
 	}
 	public boolean hasCard(int id){
 		return cards.containsKey(id);
 	}
 	
 	public boolean hasIdol(Idol idol){
-		int id = -1;
-		try{
-			id = Integer.parseInt(idol.getMap().get("chara_id"));
-		}catch(Exception e){
-			return false;
-		}
-		return this.hasIdol(id);
+		return this.hasIdol(idol.getId());
 	}
 	public boolean hasIdol(int id){
 		return charas.containsKey(id);
@@ -53,6 +42,7 @@ public class DataCache extends Errno{
 	
 	public boolean setCard(Cards card){
 		if(!card.complete()){
+			out(1,"errno: 2- card for ["+card.getId()+"] isn't complete");
 			this.errorMessage="card_not_complet";
 			this.errno=2;
 			return false;
@@ -62,12 +52,13 @@ public class DataCache extends Errno{
 			this.errno=1;
 			return false;
 		}
-		this.cards.put((int)Integer.parseInt(card.getMap().get("id")), card);
+		this.cards.put(card.getId(), card);
 		this.Ereset();
 		return true;
 	}
 	public boolean setChara(Idol idol){
 		if(!idol.complete()){
+			out(1,"errno: 2- idol for ["+idol.getId()+"] isn't complete");
 			this.errorMessage="idol_not_complet";
 			this.errno=2;
 			return false;
@@ -77,7 +68,7 @@ public class DataCache extends Errno{
 			this.errno=1;
 			return false;
 		}
-		this.charas.put((int)Integer.parseInt(idol.getMap().get("chara_id")), idol);
+		this.charas.put(idol.getId(), idol);
 		this.Ereset();
 		return true;
 	}
@@ -89,6 +80,7 @@ public class DataCache extends Errno{
 	}
 	public boolean setSkill(Skill skill) {
 		if(!skill.complete()){
+			out(1,"errno: 2- idol for ["+skill.getId()+"] isn't complete");
 			this.errorMessage="skill_not_complet";
 			this.errno=2;
 			return false;
@@ -98,7 +90,7 @@ public class DataCache extends Errno{
 			this.errno=1;
 			return false;
 		}
-		this.skills.put((int)Integer.parseInt(skill.getMap().get("id")), skill);
+		this.skills.put(skill.getId(), skill);
 		this.Ereset();
 		return true;
 	}

@@ -79,5 +79,8 @@ public class Idol extends DataNormal{
 	public String className() {
 		return "chara";
 	}
+	public int getId() {
+		return Integer.parseInt(this.map.get("chara_id"));
+	}
 
 }

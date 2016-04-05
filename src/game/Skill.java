@@ -43,4 +43,7 @@ public class Skill extends DataNormal{
 		for(int i = 0;i<tt.length;s[i]=tt[i++].toString());
 		return s;
 	}
+	public int getId() {
+		return Integer.parseInt(this.map.get("id"));
+	}
 }
