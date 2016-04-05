@@ -2,6 +2,7 @@ package test;
 
 import game.Cards;
 import game.Idol;
+import game.Skill;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,14 +26,16 @@ public class TestMain {
 		System.out.println("Finish for loading web page\n");
 		HtmlAnaliser analyser = new HtmlAnaliser(ty);
 		DataCache cache = new DataCache();
-		analyser.log=true;
-		analyser.elev=3;
+		analyser.log=false;
+		analyser.elev=2;
 		if(!analyser.analyseCardPage(cache))System.out.println("error: "+analyser.errorMessage);
 		
 		Database database = new Database();
 		System.out.println(cache.hasIdol(197));
-		database.insert("cards", cache.getCard(200023).getMap(), new Cards().aurgsString());
-		database.insert("chara", cache.getChara(197).getMap(), new Idol().aurgsString());
+		System.out.println(cache.getSkill(200023).toString());
+		database.log=true;
+		database.elev=5;
+		database.insert("skill", cache.getSkill(200023).getMap(), new Skill().aurgsString());
 		
 /*		ArrayList<String>keys =new ArrayList<String>();
 		keys.add("id");

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -62,13 +63,16 @@ public class Database extends Errno{
 		} catch ( Exception e ) {
 			errorMessage=( e.getClass().getName() + ": " + e.getMessage());
 			errno=7;
+			out(1,"[error]:for SQL: "+sql+"\n Error 7>>>"+errorMessage);
 			return false;
 		}
-		System.out.println("Records created successfully");
+		out(2,"Records created successfully");
 		return true;
 	}
-	
-	public boolean insert(String table,Map<String, String> map,String[] strings){
+	public boolean insert(String table,Map<String, String> map,ArrayList<String> strings){
+		return runCode(insertCode(table, map, strings));
+	}
+	protected String insertCode(String table,Map<String, String> map,ArrayList<String> strings){
 		String code1 = "INSERT INTO "+table+" (";
 		String keys = "";
 		String values = "";
@@ -80,17 +84,19 @@ public class Database extends Errno{
 			
 			keys+=key;
 			boolean key_is_string =false;
-			for(String s:strings){
-				if(s.equals(key))key_is_string = true;
-				break;
-			}
-			if(key_is_string)values+="'";
-			values += map.get(key);
-			if(key_is_string)values+="'";
+			if(strings.contains(key))key_is_string = true;
+			String value = "";
+			if(key_is_string)value+="'";
+			value += map.get(key);
+			if(key_is_string)value+="'";
+			out(4,"for "+key+" is string ["+key_is_string+"] get resultat :["+value+"]");
+			values+=value;
 		}
-		System.out.println(code1+keys+") VALUES ("+values+");");
+		String sql = code1+keys+") VALUES ("+values+");";
+		out(2,"get insert code:"+sql);
 		//this.runCode(code1+keys+") VALUES ("+values+");");//INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) VALUES (2, 'Allen', 25, 'Texas', 15000.00 ); 
-		return false;
+		
+		return sql;
 	}
 
 	public LinkedList<HashMap<String,String>> select(String SQLcode,List<String>keys){

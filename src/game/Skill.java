@@ -1,5 +1,7 @@
 package game;
 
+import java.util.ArrayList;
+
 public class Skill extends DataNormal{
 
 	protected enum Aurg{
@@ -37,10 +39,10 @@ public class Skill extends DataNormal{
 		return "skill";
 	}
 	@Override
-	public String[] aurgsString() {
+	public ArrayList<String> aurgsString() {
 		AurgString[] tt = AurgString.values();
-		String[] s = new String[tt.length];
-		for(int i = 0;i<tt.length;s[i]=tt[i++].toString());
+		ArrayList<String> s = new ArrayList<String>(tt.length);
+		for(int i = 0;i<tt.length;i++)s.add(tt[i].toString());
 		return s;
 	}
 	public int getId() {

@@ -1,5 +1,7 @@
 package game;
 
+import java.util.ArrayList;
+
 /**
  * 	int Idol_id;
 	int use_type;
@@ -10,10 +12,10 @@ package game;
  * @author laurencedu
  *
  */
-public class Card_comments extends DataNormal{
+public class Card_cmd_t extends DataNormal{
 
 	protected enum Aurg{
-		Idol_id,use_type,voice_flag,discription
+		chara_id,use_type,voice_flag,discription
 	}
 	protected enum AurgString{
 		discription
@@ -43,18 +45,18 @@ public class Card_comments extends DataNormal{
 	}
 	@Override
 	public String className() {
-		return "card_c_t";
+		return "chara_valist";
 	}
 	@Override
-	public String[] aurgsString() {
+	public ArrayList<String> aurgsString() {
 		AurgString[] tt = AurgString.values();
-		String[] s = new String[tt.length];
-		for(int i = 0;i<tt.length;s[i]=tt[i++].toString());
+		ArrayList<String> s = new ArrayList<String>(tt.length);
+		for(int i = 0;i<tt.length;i++)s.add(tt[i].toString());
 		return s;
 	}
 	@Override
 	public int getId() {
 		// TODO 自动生成的方法存根
-		return Integer.parseInt(this.map.get("Idol_id"));
+		return Integer.parseInt(this.map.get("chara_id"));
 	}
 }

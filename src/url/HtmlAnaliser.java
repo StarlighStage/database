@@ -315,8 +315,7 @@ public class HtmlAnaliser extends Errno{
 			value = analiser.getValue();
 			out(2,"set>"+name+":"+value);// debug
 			if(!chara.setElements(name, value)){
-				switch(name){//careful
-				}
+				out(3,">>>Useless:"+"["+name+"]");
 			}
 		}
 		if(!chara.complete()){
@@ -327,4 +326,5 @@ public class HtmlAnaliser extends Errno{
 		}
 		return true;	
 	}
+	
 }

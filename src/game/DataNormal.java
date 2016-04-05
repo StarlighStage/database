@@ -1,6 +1,7 @@
 package game;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -45,10 +46,10 @@ public abstract class DataNormal extends Errno {
 		return s;
 	}
 	@Override
-	public String[] aurgsString() {
+	public ArrayList<String> aurgsString() {
 		AurgString[] tt = AurgString.values();
-		String[] s = new String[tt.length];
-		for(int i = 0;i<tt.length;s[i]=tt[i++].toString());
+		ArrayList<String> s = new ArrayList<String>(tt.length);
+		for(int i = 0;i<tt.length;i++)s.add(tt[i].toString());
 		return s;
 	}
 	 * */
@@ -134,6 +135,6 @@ public abstract class DataNormal extends Errno {
 	}
 	public abstract String className();
 
-	public  abstract String[] aurgsString();
+	public  abstract List<String> aurgsString();
 	public abstract int getId();
 }

@@ -1,5 +1,7 @@
 package game;
 
+import java.util.ArrayList;
+
 
 
 public class Cards extends DataNormal{
@@ -8,7 +10,7 @@ public class Cards extends DataNormal{
 		id , chara_id , rarity, attribute ,title_flag , evolution_id,series_id,pose, place,evolution_type , album_id,
 		open_story_id ,open_dress_id ,skill_id ,leader_skill_id , grow_type,hp_min ,
 		vocal_min , dance_min , visual_min ,hp_max ,vocal_max,
-		dance_max,visual_max , solo_live,star_lesson_type ,title,has_spread;
+		dance_max,visual_max ,bonus_vocal,bonus_dance,bonus_visual,bonus_hp, solo_live,star_lesson_type ,title,has_spread;
 
 	}
 	protected enum AurgOther{
@@ -38,13 +40,13 @@ public class Cards extends DataNormal{
 	}
 	@Override
 	public String className() {
-		return "card";
+		return "cards";
 	}
 	@Override
-	public String[] aurgsString() {
+	public ArrayList<String> aurgsString() {
 		AurgString[] tt = AurgString.values();
-		String[] s = new String[tt.length];
-		for(int i = 0;i<tt.length;s[i]=tt[i++].toString());
+		ArrayList<String> s = new ArrayList<String>(tt.length);
+		for(int i = 0;i<tt.length;i++)s.add(tt[i].toString());
 		return s;
 	}
 	@Override

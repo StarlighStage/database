@@ -39,6 +39,12 @@ public class DataCache extends Errno{
 	public boolean hasIdol(int id){
 		return charas.containsKey(id);
 	}
+	public boolean hasSkill(Skill skill){
+		return this.hasSkill(skill.getId());
+	}
+	public boolean hasSkill(int id){
+		return skills.containsKey(id);
+	}
 	
 	public boolean setCard(Cards card){
 		if(!card.complete()){
@@ -72,12 +78,6 @@ public class DataCache extends Errno{
 		this.Ereset();
 		return true;
 	}
-	public Cards getCard(int i) {
-		return cards.get(i);
-	}
-	public Idol getChara(int i) {
-		return charas.get(i);
-	}
 	public boolean setSkill(Skill skill) {
 		if(!skill.complete()){
 			out(1,"errno: 2- idol for ["+skill.getId()+"] isn't complete");
@@ -94,16 +94,14 @@ public class DataCache extends Errno{
 		this.Ereset();
 		return true;
 	}
-	public boolean hasSkill(Skill skill) {
-		int id = -1;
-		try{
-			id = Integer.parseInt(skill.getMap().get("id"));
-		}catch(Exception e){
-			return false;
-		}
-		return this.hasSkill(id);
+	public Cards getCard(int i) {
+		return cards.get(i);
 	}
-	public boolean hasSkill(int id) {
-		return skills.containsKey(id);
+	public Idol getChara(int i) {
+		return charas.get(i);
 	}
+	public Skill getSkill(int i) {
+		return skills.get(i);
+	}
+
 }

@@ -23,7 +23,7 @@ public class WebsiteReader {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
 		}
-		return res;
+		return res.replaceAll("&#39;", "'");
 	}
 	
 }

@@ -10,12 +10,12 @@ public class Text_Code_t_Analiser_changeTest {
 
 	@Test
 	public void testgetFinArug() {
-		Code_t_Analiser_change snorm = new Code_t_Analiser_change("chara_id=107, name='持田亜里沙')");
-		Code_t_Analiser_change snorm1 = new Code_t_Analiser_change("valist = [,], name='持田亜里沙')");
-		Code_t_Analiser_change snorm2 = new Code_t_Analiser_change("valist = (,), name='持田亜里沙')");
-		Code_t_Analiser_change snorm3 = new Code_t_Analiser_change("valist = [(,),(,)], name='持田亜里沙')");
-		Code_t_Analiser_change snorm4 = new Code_t_Analiser_change("valist = [(,),(,)])");
-		Code_t_Analiser_change serr = new Code_t_Analiser_change("valist = [(,),(,)]");
+		Code_t_Analiser_change snorm = new Code_t_Analiser_change("a_t(chara_id=107, name='持田亜里沙')");
+		Code_t_Analiser_change snorm1 = new Code_t_Analiser_change("a_t(valist = [,], name='持田亜里沙')");
+		Code_t_Analiser_change snorm2 = new Code_t_Analiser_change("a_t(valist = (,), name='持田亜里沙')");
+		Code_t_Analiser_change snorm3 = new Code_t_Analiser_change("a_t(valist = [(,),(,)], name='持田亜里沙')");
+		Code_t_Analiser_change snorm4 = new Code_t_Analiser_change("a_t(valist = [(,),(,)])");
+		Code_t_Analiser_change serr = new Code_t_Analiser_change("a_t(valist = [(,),(,)]");
 		assertEquals(snorm.getFinArug(), 12);
 		assertEquals(snorm1.getFinArug(), 12);
 		assertEquals(snorm2.getFinArug(), 12);
@@ -27,7 +27,7 @@ public class Text_Code_t_Analiser_changeTest {
 	
 	@Test
 	public void testAnalyse(){
-		Code_t_Analiser_change snorm = new Code_t_Analiser_change("chara_id=107,valist = [(,),(,)], name='持田亜里沙')");
+		Code_t_Analiser_change snorm = new Code_t_Analiser_change("a_t(chara_id=107,valist = [(,),(,)], name='持田亜里沙')");
 		snorm.log=true;
 		snorm.elev=3;
 		System.out.println("name='持田亜里沙'".indexOf('='));
@@ -45,5 +45,15 @@ public class Text_Code_t_Analiser_changeTest {
 		assertEquals(snorm.getName(),"name");
 		assertEquals(snorm.getValue(),"持田亜里沙");
 		assertFalse(snorm.hasNext());
+	}
+	
+	@Test
+	public void petitTest(){
+		String val = "aaa bbb";
+		int index = val.indexOf(' ');
+		String fstName = val.substring(0, index).trim();
+		String lstName = val.substring(index+1).trim();
+		assertEquals(fstName,"aaa");
+		assertEquals(lstName,"bbb");
 	}
 }

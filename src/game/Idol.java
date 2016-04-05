@@ -1,5 +1,7 @@
 package game;
 
+import java.util.ArrayList;
+
 /**	int chara_id;
 	String name;
 	String name_kana;
@@ -37,13 +39,13 @@ public class Idol extends DataNormal{
 	protected enum Aurg{
 		chara_id, lst_name, lst_name_kana, age, home_town, height, weight, body_size_1, body_size_2, body_size_3,
 		birth_month,birth_day, constellation, blood_type, hand, favorite, voice, model_height_id,model_weight_id,
-		model_bust_id, model_skin_id,spine_size,personality,type,conventional,kana_spaced,kanji_spaced;
+		model_bust_id, model_skin_id,spine_size,personality,type,conventional;
 	}
 	protected enum AurgOther{
 		 fst_name, fst_name_kana;
 	}
 	protected enum AurgString{
-		lst_name,lst_name_kana,fst_name,fst_name_kana,voice,favorite;
+		lst_name,lst_name_kana,fst_name,fst_name_kana,voice,favorite,conventional;
 	}
 	
 	public Valist getValist_Idol(){
@@ -69,18 +71,64 @@ public class Idol extends DataNormal{
 		return s;
 	}
 	@Override
-	public String[] aurgsString() {
+	public ArrayList<String> aurgsString() {
 		AurgString[] tt = AurgString.values();
-		String[] s = new String[tt.length];
-		for(int i = 0;i<tt.length;s[i]=tt[i++].toString());
+		ArrayList<String> s = new ArrayList<String>(tt.length);
+		for(int i = 0;i<tt.length;i++)s.add(tt[i].toString());
 		return s;
 	}
 	@Override
 	public String className() {
 		return "chara";
 	}
+	@Override
 	public int getId() {
 		return Integer.parseInt(this.map.get("chara_id"));
 	}
-
+	@Override
+	public boolean setElements(String name,String val){
+		if(name.equals("kanji_spaced")){// name with spase
+			int index = val.indexOf(' ');
+			if(index==-1)map.put("lst_name", val);
+			else{
+				String fstName = val.substring(0, index).trim();
+				String lstName = val.substring(index+1).trim();
+				map.put("fst_name", fstName);
+				map.put("lst_name", lstName);
+				Ereset();
+				return true;
+			}
+		}//TODO Valist
+		else if(name.equals("kana_spaced")){
+			int index = val.indexOf(' ');
+			if(index==-1)map.put("lst_name_kana", val);
+			else{
+				String fstName = val.substring(0, index).trim();
+				String lstName = val.substring(index+1).trim();
+				map.put("fst_name_kana", fstName);
+				map.put("lst_name_kana", lstName);
+				Ereset();
+				return true;
+			}
+		}
+		else if(!checkIn(name)){
+			this.errno = 3;
+			this.errorMessage = name+" isn't a key word";
+			return false;
+		}
+		if(map.containsKey(name)){
+			this.errno = 1;
+			this.errorMessage = name+" already exist";
+			return false;
+		}
+		map.put(name.toLowerCase(), val);
+		Ereset();
+		return true;
+	}
+	public String getIdolName(){
+		String res = "";
+		if(map.containsKey("fst_name"))res += map.get("fst_name");
+		res+=map.get("lst_name");
+		return res;
+	}
 }
